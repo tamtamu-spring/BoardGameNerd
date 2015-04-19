@@ -1,5 +1,5 @@
 # BoardGameNerd
-Hobby project to learn combining different technologies:
+Hobby project to learn different technologies:
 * Spring Boot
 * Spring Security
 * Spring MVC
