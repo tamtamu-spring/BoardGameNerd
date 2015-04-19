@@ -1,7 +1,4 @@
-* Add users and their roles
 * Add db authentication
-* Add login page
 * Add remember me
 * Add registration page
 * Add register email confirmation
-* Add
