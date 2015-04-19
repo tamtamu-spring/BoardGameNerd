@@ -3,7 +3,7 @@
 <head lang="en">
     <meta charset="UTF-8" />
 
-    <title>Home</title>
+    <title>Login</title>
 
     <!-- Stylesheets -->
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.4/css/bootstrap.min.css}" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" />
@@ -36,27 +36,47 @@
 
     <div class="container">
         <div layout:fragment="content">
-            <div class="jumbotron">
-                <h1>Static content for prototyping purposes only</h1>
-                <p>Resize this responsive page to see the effect!</p>
-            </div>
-            <div class="row">
-                <div class="col-sm-4">
-                    <h3>Column 1</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
-                    <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>
-                </div>
-                <div class="col-sm-4">
-                    <h3>Column 2</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
-                    <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>
-                </div>
-                <div class="col-sm-4">
-                    <h3>Column 3</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
-                    <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>
-                </div>
-            </div>
+            <form th:action="@{/login}" action="#" method="post" class="form-horizontal">
+                <fieldset>
+                    <legend>Please Login</legend>
+                    <div th:if="${param.error}" class="alert alert-danger">
+                        Invalid username and/or password.
+                    </div>
+                    <div th:if="${param.logout}" class="alert alert-success">
+                        You have been logged out.
+                    </div>
+
+                    <div class="form-group">
+                        <label for="username" class="col-sm-1 control-label">Username</label>
+                        <div class="col-sm-11">
+                            <input type="text" id="username" name="username" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password" class="col-sm-1 control-label">Password</label>
+                        <div class="col-sm-11">
+                            <input type="password" id="password" name="password" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-offset-1 col-sm-11">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" /> Remember me
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-offset-1 col-sm-11">
+                            <button type="submit" class="btn btn-default">Log in</button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
         </div>
     </div>
 

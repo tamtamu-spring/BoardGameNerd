@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
 
 @Configuration
+@Order(1)
 @EnableWebMvcSecurity
 public class SecurityConfig {
     @Autowired
@@ -21,35 +22,37 @@ public class SecurityConfig {
     }
 
     @Configuration
-    @Order(1)
-    public static class AdminWebSecurityConfigurationAdapter extends WebSecurityConfigurerAdapter {
+    @Order(10)
+    public static class AllWebSecurityConfigurationAdapter extends WebSecurityConfigurerAdapter {
         protected void configure(HttpSecurity http) throws Exception {
             http
-                    .antMatcher("/admin/**")
-                    .authorizeRequests().anyRequest().hasRole("ADMIN").and()
-                    .httpBasic();
+                .authorizeRequests().antMatchers("/", "/home").permitAll().anyRequest().authenticated()
+                .and()
+                .formLogin().loginPage("/login").permitAll()
+                .and()
+                .logout().permitAll()
+                .and()
+                .httpBasic()
+            ;
         }
     }
 
     @Configuration
-    @Order(2)
-    public static class FormLoginWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
-        @Override
+    @Order(5)
+    public static class AdminWebSecurityConfigurationAdapter extends WebSecurityConfigurerAdapter {
         protected void configure(HttpSecurity http) throws Exception {
             http
-                    .authorizeRequests()
-                    .antMatchers("/", "/home").permitAll()
-                    .anyRequest().authenticated().and()
-                    .formLogin().and()
-                    .httpBasic();
+                .antMatcher("/admin*//**").authorizeRequests().anyRequest().hasRole("ADMIN")
+            ;
         }
+    }
 
-        @Configuration
-        public static class ResourcesWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
-            @Override
-            public void configure(WebSecurity web) throws Exception {
-                web.ignoring().antMatchers("/webjars/**", "/css/**", "/js/**");
-            }
+     @Configuration
+     @Order(100)
+     public static class ResourcesWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
+        @Override
+        public void configure(WebSecurity web) throws Exception {
+            web.ignoring().antMatchers("/webjars*//**", "/css*//**", "/js*//**");
         }
     }
 }

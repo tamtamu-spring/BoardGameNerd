@@ -13,5 +13,6 @@ public class MvcConfig extends WebMvcAutoConfiguration.WebMvcAutoConfigurationAd
         registry.addViewController("/home").setViewName("home");
         registry.addViewController("/admin").setViewName("admin");
         registry.addViewController("/profile").setViewName("profile");
+        registry.addViewController("/login").setViewName("login");
     }
 }
