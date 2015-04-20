@@ -2,6 +2,8 @@ package nl.machiel.boardgamenerd;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -15,4 +17,13 @@ public class BoardGameNerdApplicationTests {
 	public void contextLoads() {
 	}
 
+	@Test
+	public void passwordEncoder() {
+		String pass = "admin";
+
+		PasswordEncoder encoder = new BCryptPasswordEncoder();
+		String encPass = encoder.encode(pass);
+
+		System.out.printf("Pass: %s, length: %s%n", encPass, encPass.length());
+	}
 }

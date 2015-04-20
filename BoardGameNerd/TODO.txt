@@ -1,4 +1,2 @@
-* Add db authentication
-* Add remember me
 * Add registration page
 * Add register email confirmation
