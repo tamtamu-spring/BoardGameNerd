@@ -5,3 +5,4 @@ Hobby project to learn different technologies:
 * Spring MVC
 * Thymeleaf
 * Bootstrap
+* Flyway
