@@ -1,6 +1,8 @@
 package nl.machiel.boardgamenerd.config;
 
+import nl.machiel.boardgamenerd.service.BgnUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -17,18 +19,41 @@ import org.springframework.security.web.authentication.rememberme.PersistentToke
 import javax.sql.DataSource;
 
 @Configuration
-@Order(1)
 @EnableWebMvcSecurity
-public class SecurityConfig {
+@Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+    private static final String[] PERMIT_ALL_PAGES = {"/", "/home", "/registration", "/register"};
+
+    @Autowired
+    private BgnUserDetailsService bgnUserDetailsService;
+
     @Autowired
     private DataSource datasource;
 
     @Autowired
     protected void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-                .jdbcAuthentication()
-                .dataSource(datasource)
-                .passwordEncoder(passwordEncoder());
+        auth.userDetailsService(bgnUserDetailsService).passwordEncoder(passwordEncoder())
+        ;
+    }
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+                .authorizeRequests()
+                    .antMatchers(PERMIT_ALL_PAGES).permitAll()
+                    .antMatchers("/admin/**").hasRole("ADMIN")
+                    .anyRequest().authenticated().and()
+                .formLogin().loginPage("/login").permitAll().and()
+                .logout().permitAll().and()
+                .rememberMe()
+                    .tokenRepository(persistentTokenRepository())
+                    .tokenValiditySeconds(1209600)
+        ;
+    }
+
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/db*//**//**", "/js*//**//**", "/css*//**//**", "/webjars*//**//**");
     }
 
     @Bean
@@ -36,50 +61,10 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    @Configuration
-    @Order(10)
-    public static class AllWebSecurityConfigurationAdapter extends WebSecurityConfigurerAdapter {
-        @Autowired
-        private DataSource datasource;
-
-        protected void configure(HttpSecurity http) throws Exception {
-            http
-                .authorizeRequests().antMatchers("/", "/home").permitAll().anyRequest().authenticated()
-                .and()
-                .formLogin().loginPage("/login").permitAll()
-                .and()
-                .logout().permitAll()
-                .and()
-                .rememberMe().tokenRepository(persistentTokenRepository()).tokenValiditySeconds(1209600)
-                .and()
-                .httpBasic()
-            ;
-        }
-
-        @Bean
-        public PersistentTokenRepository persistentTokenRepository() {
-            JdbcTokenRepositoryImpl db = new JdbcTokenRepositoryImpl();
-            db.setDataSource(datasource);
-            return db;
-        }
-    }
-
-    @Configuration
-    @Order(5)
-    public static class AdminWebSecurityConfigurationAdapter extends WebSecurityConfigurerAdapter {
-        protected void configure(HttpSecurity http) throws Exception {
-            http
-                .antMatcher("/admin*//**").authorizeRequests().anyRequest().hasRole("ADMIN")
-            ;
-        }
-    }
-
-     @Configuration
-     @Order(100)
-     public static class ResourcesWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
-        @Override
-        public void configure(WebSecurity web) throws Exception {
-            web.ignoring().antMatchers("/webjars*//**", "/css*//**", "/js*//**");
-        }
+    @Bean
+    public PersistentTokenRepository persistentTokenRepository() {
+        JdbcTokenRepositoryImpl db = new JdbcTokenRepositoryImpl();
+        db.setDataSource(datasource);
+        return db;
     }
 }

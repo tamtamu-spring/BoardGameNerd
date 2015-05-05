@@ -1,39 +1,14 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/layout">
 <head lang="en">
+    <!--/*-->
     <meta charset="UTF-8" />
-
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../static/css/bgn.css" />
+    <!--*/-->
     <title>Login</title>
-
-    <!-- Stylesheets -->
-    <link rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.4/css/bootstrap.min.css}" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" />
-    <link rel="stylesheet" th:href="@{css/bgn.css}" href="../static/css/bgn.css" />
 </head>
 <body>
-    <nav class="navbar navbar-default navbar-fixed-top">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#">BGN</a>
-            </div>
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav navbar-left">
-                    <li class="active"><a th:href="@{/home}" href="#">Home</a></li>
-                    <li><a th:href="@{/profile}" href="#">Profile</a></li>
-                    <li><a th:href="@{/admin}" href="#">Admin</a></li>
-
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li><p class="navbar-text">Signed in as Machiel</p></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
     <div class="container">
         <div layout:fragment="content">
             <form th:action="@{/login}" action="#" method="post" class="form-horizontal">
@@ -49,14 +24,14 @@
                     <div class="form-group">
                         <label for="username" class="col-sm-1 control-label">Username</label>
                         <div class="col-sm-11">
-                            <input type="text" id="username" name="username" class="form-control" />
+                            <input type="text" id="username" name="username" class="form-control" placeholder="Username" />
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="password" class="col-sm-1 control-label">Password</label>
                         <div class="col-sm-11">
-                            <input type="password" id="password" name="password" class="form-control" />
+                            <input type="password" id="password" name="password" class="form-control" placeholder="Password" />
                         </div>
                     </div>
 
@@ -77,12 +52,6 @@
                     </div>
                 </fieldset>
             </form>
-        </div>
-    </div>
-
-    <div class="footer">
-        <div class="container">
-            <p class="text-muted text-center">&copy;2015 Static Footer Template</p>
         </div>
     </div>
 </body>

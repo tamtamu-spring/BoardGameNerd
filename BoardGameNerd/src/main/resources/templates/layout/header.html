@@ -2,17 +2,17 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head lang="en">
-    <meta charset="UTF-8"/>
-
-    <title>Header</title>
-
-    <!-- Stylesheets -->
-    <link rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.4/css/bootstrap.min.css}" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"/>
-    <link rel="stylesheet" th:href="@{css/bgn.css}" href="../../static/css/bgn.css"/>
+    <!--/*-->
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../static/css/bgn.css" />
+    <!--*/-->
 </head>
 <body>
     <div th:fragment="header">
-        <nav class="navbar navbar-default navbar-fixed-top">
+        <form name="logoutForm" th:action="@{/logout}" method="post" />
+
+        <nav class="navbar navbar-fixed-top navbar-inverse">
             <div class="container-fluid">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
@@ -25,37 +25,25 @@
                 </div>
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav navbar-left">
-                        <li class="active"><a th:href="@{/home}" href="#">Home</a></li>
-                        <li><a th:href="@{/profile}" href="#">Profile</a></li>
-                        <li><a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/admin}" href="#">Admin</a></li>
-
+                        <li><a th:href="@{/home}" href="#">Home</a></li>
+                        <li sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{/admin}" href="#">Admin</a></li>
                     </ul>
+
                     <ul class="nav navbar-nav navbar-right">
-                        <li><p class="navbar-text">Signed in as <span sec:authentication="name">Machiel</span></p></li>
+                        <li sec:authorize="isAuthenticated()"><p class="navbar-text">Signed in as <a th:href="@{/profile}" href="#" sec:authentication="name">Machiel</a></p></li>
+                        <li sec:authorize="isAnonymous()"><a th:href="@{/registration}" href="#">Registration</a></li>
+                        <li sec:authorize="isAnonymous()"><a th:href="@{/login}" href="#">Login</a></li>
+                        <li sec:authorize="isAuthenticated()">
+                            <a href="javascript: document.logoutForm.submit();">Logout</a>
+                        </li>
                     </ul>
                 </div>
             </div>
         </nav>
     </div>
 
-    <div class="container">
-        <div class="jumbotron">
-            <h1>Static content for prototyping purposes only</h1>
-
-            <p>Resize this responsive page to see the effect!</p>
-        </div>
-    </div>
-
-    <div class="footer">
-        <div class="container">
-            <p class="text-muted text-center">&copy;2015 Static Footer Template</p>
-        </div>
-    </div>
-
     <!-- Scripts -->
-    <script type="text/javascript" th:src="@{/webjars/jquery/2.1.3/jquery.min.js}"
-            src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.4/js/bootstrap.min.js}"
-            src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 </body>
 </html>

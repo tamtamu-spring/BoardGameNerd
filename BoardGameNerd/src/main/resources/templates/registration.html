@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/layout">
+<head lang="en">
+    <!--/*-->
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../static/css/bgn.css" />
+    <!--*/-->
+    <title>Registration</title>
+</head>
+<body>
+    <div class="container">
+        <div layout:fragment="content">
+            <form th:action="@{/registration}" action="#" method="post" class="form-horizontal" th:object="${bgnUser}">
+                <fieldset>
+                    <legend>Registration</legend>
+
+                    <div class="form-group" th:classappend="${#fields.hasErrors('username')}? 'has-error has-feedback'">
+                        <label for="username" class="col-sm-1 control-label">Username</label>
+                        <div class="col-md-11">
+                            <input type="text" id="username" name="username" class="form-control" placeholder="Username" autofocus="autofocus" required="required" th:field="*{username}" />
+                            <span class="glyphicon glyphicon-remove form-control-feedback" th:if="${#fields.hasErrors('username')}"></span>
+                            <span class="help-block" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username Error</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group" th:classappend="${#fields.hasErrors('password')}? 'has-error has-feedback'">
+                        <label for="password" class="col-sm-1 control-label">Password</label>
+                        <div class="col-sm-11">
+                            <input type="password" id="password" name="password" class="form-control" placeholder="Password" th:field="*{password}" required="required" />
+                            <span class="glyphicon glyphicon-remove form-control-feedback" th:if="${#fields.hasErrors('password')}"></span>
+                            <span class="help-block" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group" th:classappend="${#fields.hasErrors('email')}? 'has-error has-feedback'">
+                        <label for="email" class="col-sm-1 control-label">Email</label>
+                        <div class="col-sm-11">
+                            <input type="email" id="email" name="email" class="form-control" placeholder="Email address" th:field="*{email}" required="required" />
+                            <span class="glyphicon glyphicon-remove form-control-feedback" th:if="${#fields.hasErrors('email')}"></span>
+                            <span class="help-block" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-offset-1 col-sm-11">
+                            <button type="submit" class="btn btn-default">Register</button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

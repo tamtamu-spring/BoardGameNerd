@@ -1,3 +1,5 @@
-* Add registration page
 * Add register email confirmation
+* Add password recovery
 * Add Access Denies page
+* Use HTTPS
+? Use openId providers (Facebook, Google, etc)

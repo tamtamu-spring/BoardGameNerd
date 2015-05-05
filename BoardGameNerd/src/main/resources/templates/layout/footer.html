@@ -1,46 +1,13 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head lang="en">
+    <!--/*-->
     <meta charset="UTF-8" />
-
-    <title>Footer</title>
-
-    <!-- Stylesheets -->
-    <link rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.4/css/bootstrap.min.css}" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" />
-    <link rel="stylesheet" th:href="@{css/bgn.css}" href="../../static/css/bgn.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../../static/css/bgn.css" />
+    <!--*/-->
 </head>
 <body>
-    <nav class="navbar navbar-default navbar-fixed-top">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#">BGN</a>
-            </div>
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav navbar-left">
-                    <li class="active"><a th:href="@{/home}" href="#">Home</a></li>
-                    <li><a th:href="@{/profile}" href="#">Profile</a></li>
-                    <li><a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/admin}" href="#">Admin</a></li>
-
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li><p class="navbar-text">Signed in as <span sec:authentication="name">Machiel</span></p></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <div class="container">
-        <div class="jumbotron">
-            <h1>Static content for prototyping purposes only</h1>
-            <p>Resize this responsive page to see the effect!</p>
-        </div>
-    </div>
-
     <div th:fragment="footer">
         <div class="container">
             <div class="footer">
